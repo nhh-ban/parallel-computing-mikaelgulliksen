@@ -1,0 +1,32 @@
+library(tictoc)
+
+executeFile <- function(file_path) {
+  tic()  # Start the timer
+  source(file_path)  # Execute the R script
+  toc()  # Stop the timer and print the elapsed time
+}
+
+# Directory containing the R files
+folder_path <- "/Users/mikaelgulliksen/repos/parallel-computing-mikaelgulliksen/scripts"
+
+# List of file names
+file_names <- c("As_Is.R", "29-35.R", "rewrite.R")
+
+# Loop through the files and time their execution
+for (file in file_names) {
+  file_path <- file.path(folder_path, file)
+  cat("Executing", file, "\n")
+  executeFile(file_path)
+  cat("\n")
+}
+
+#When running the scripts, the unchanged script takes the longest to execute with 72,63 seconds.
+#When changing lines 29-35 in the original script the runtime decreases to 47.03 seconds, and
+#rewriting the function MTweedieTests brings the time down to 44,399 seconds. Making the order
+#rewritten function - rewritten lines - unchanged from fastest to slowest.
+# It seems natural that the unchanged script is slowest as the two others allow for parallel 
+#computing. It also explains the bigger difference between the slowest and the two others.
+#The results also suggests that dividing the simulations themselves rather than in the loop
+#also is more efficient.
+
+
